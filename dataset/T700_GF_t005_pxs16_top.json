@@ -1,0 +1,19 @@
+{
+	"train": [
+		{
+			"path": "/data/staff/tomograms/users/johannes/data/T-21-GF/T700-T-21_GF_1p6um_150mm_0p25ms_500prj_01/T700-T-21_GF_1p6um_150mm_0p25ms_500prj_01_frec.h5",
+			"dset": "data",
+			"ROI0": [0,850],
+			"ROI1": [400,1200]
+		}
+	],
+
+	"validate": [
+		{
+			"path": "/data/staff/tomograms/users/johannes/data/T-21-GF/T700-T-21_GF_1p6um_150mm_0p25ms_500prj_02/T700-T-21_GF_1p6um_150mm_0p25ms_500prj_02_frec.h5",
+			"dset": "data",
+			"ROI0": [0,850]
+		}
+	]
+}
+

@@ -1,0 +1,47 @@
+{
+	"train": [
+		{
+			"path": "/data/staff/tomograms/users/johannes/data/T700-T-17_10N_10x_/T700-T-17_10N_10x_001ffc_rec_standard_pxs08.h5",
+			"dset": "data",
+			"ROI": [[0,0,0],[-1,-1,-1]]
+		},
+		{
+			"path": "/data/staff/tomograms/users/johannes/data/T700-T-17_240N_10x_/T700-T-17_240N_10x_001ffc_rec_standard_pxs08.h5"
+			"dset": "data",
+			"ROI": [[0,0,0],[-1,-1,-1]]
+		},
+		{
+			"path": "/data/staff/tomograms/users/johannes/data/T700-T-17_360N_10x_/T700-T-17_360N_10x_001ffc_rec_standard_pxs08.h5"
+			"dset": "data",
+			"ROI": [[0,0,0],[-1,-1,-1]]
+		},
+		{
+			"path": "/data/staff/tomograms/users/johannes/data/T700-T-17_400N_10x_/T700-T-17_400N_10x_001ffc_rec_standard_pxs08.h5"
+			"dset": "data",
+			"ROI": [[0,0,0],[-1,-1,-1]]
+		}
+	],
+
+	"validate": [
+		{
+			"path": "/data/staff/tomograms/users/johannes/data/T700-T-17_10N_10x_/T700-T-17_10N_10x_001ffc_rec_standard_pxs08.h5",
+			"dset": "data",
+			"ROI": [[0,0,0],[-1,-1,-1]]
+		},
+		{
+			"path": "/data/staff/tomograms/users/johannes/data/T700-T-17_240N_10x_/T700-T-17_240N_10x_001ffc_rec_standard_pxs08.h5"
+			"dset": "data",
+			"ROI": [[0,0,0],[-1,-1,-1]]
+		},
+		{
+			"path": "/data/staff/tomograms/users/johannes/data/T700-T-17_360N_10x_/T700-T-17_360N_10x_001ffc_rec_standard_pxs08.h5"
+			"dset": "data",
+			"ROI": [[0,0,0],[-1,-1,-1]]
+		},
+		{
+			"path": "/data/staff/tomograms/users/johannes/data/T700-T-17_400N_10x_/T700-T-17_400N_10x_001ffc_rec_standard_pxs08.h5"
+			"dset": "data",
+			"ROI": [[0,0,0],[-1,-1,-1]]
+		}
+	]
+}

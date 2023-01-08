@@ -1,0 +1,37 @@
+{
+	"train": [
+		{
+			"path": "/data/staff/tomograms/users/johannes/data/T700-T-02_test_20x_30mm_01_/T700-T-02_test_20x_30mm_01_001ffc_rec_pxs04_standard.h5",
+			"dset": "data",
+			"ROI0": [0,2159],
+			"ROI1": [150,1900],
+			"ROI2": [750,1300]
+		},
+		{
+			"path": "/data/staff/tomograms/users/johannes/data/T700-T-08_20x_01_/T700-T-08_20x_01_001ffc_rec_pxs04_standard.h5",
+			"dset": "data",
+			"ROI0": [0,2159],
+			"ROI1": [150,1900],
+			"ROI2": [750,1300]
+		},
+		{
+			"path": "/data/staff/tomograms/users/johannes/data/T700-T-26_20x_01_/T700-T-26_20x_01_001ffc_rec_pxs04_standard.h5",
+			"dset": "data",
+			"ROI0": [0,2159],
+			"ROI1": [150,1800],
+			"ROI2": [700,1300]
+		}
+	],
+
+	"validate": [
+		{
+			"path": "/data/staff/tomograms/users/johannes/data/T700-T-21_20x_/T700-T-21_20x_001ffc_rec_pxs04_standard.h5",
+			"dset": "data",
+			"ROI0": [0,2159],
+			"ROI1": [100,1800],
+			"ROI2": [800,1500]
+		}
+	]
+}
+
+

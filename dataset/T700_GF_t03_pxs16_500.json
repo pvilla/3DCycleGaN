@@ -1,0 +1,28 @@
+{
+	"train": [
+		{
+			"path": "/data/staff/tomograms/users/johannes/data/T-21-GF/T700-T-21_GF_1p6um_150mm_3ms_500prj/T700-T-21_GF_1p6um_150mm_3ms_02_500prj_rec_crop_standard.h5",
+			"dset": "data"
+		},
+		{
+			"path": "/data/staff/tomograms/users/johannes/data/T-21-GF/T700-T-21_GF_1p6um_150mm_3ms_500prj/T700-T-21_GF_1p6um_150mm_3ms_03_500prj_rec_crop_standard.h5",
+			"dset": "data"
+		},
+		{
+			"path": "/data/staff/tomograms/users/johannes/data/T-21-GF/T700-T-21_GF_1p6um_150mm_3ms_500prj/T700-T-21_GF_1p6um_150mm_3ms_04_500prj_rec_crop_standard.h5",
+			"dset": "data"
+		},
+		{
+			"path": "/data/staff/tomograms/users/johannes/data/T-21-GF/T700-T-21_GF_1p6um_150mm_3ms_500prj/T700-T-21_GF_1p6um_150mm_3ms_05_500prj_rec_crop_standard.h5",
+			"dset": "data"
+		}
+	],
+
+	"validate": [
+		{
+			"path": "/data/staff/tomograms/users/johannes/data/T-21-GF/T700-T-21_GF_1p6um_150mm_3ms_500prj/T700-T-21_GF_1p6um_150mm_3ms_01_500prj_rec_crop_standard.h5",
+			"dset": "data"
+		}
+	]
+}
+

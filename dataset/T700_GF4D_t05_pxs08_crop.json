@@ -1,0 +1,40 @@
+{
+	"train": [
+		{
+			"path": "/data/staff/tomograms/users/johannes/data/T700-T-23_4D/T700-T-23_4D_ffc_rec4D_c0-0--1_c1-200-1800_c2-700-1200_standard_10.h5",
+			"dset": "data"
+		},
+
+		{
+			"path": "/data/staff/tomograms/users/johannes/data/T700-T-23_4D/T700-T-23_4D_ffc_rec4D_c0-0--1_c1-200-1800_c2-700-1200_standard_20.h5",
+			"dset": "data"
+		},
+
+		{
+			"path": "/data/staff/tomograms/users/johannes/data/T700-T-23_4D/T700-T-23_4D_ffc_rec4D_c0-0--1_c1-200-1800_c2-700-1200_standard_26.h5",
+			"dset": "data"
+		},
+
+		{
+			"path": "/data/staff/tomograms/users/johannes/data/T700-T-23_4D/T700-T-23_4D_ffc_rec4D_c0-0--1_c1-200-1800_c2-700-1200_standard_27.h5",
+			"dset": "data"
+		},
+
+		{
+			"path": "/data/staff/tomograms/users/johannes/data/T700-T-23_4D/T700-T-23_4D_ffc_rec4D_c0-0--1_c1-200-1800_c2-700-1200_standard_28.h5",
+			"dset": "data"
+		},
+
+		{
+			"path": "/data/staff/tomograms/users/johannes/data/T700-T-23_4D/T700-T-23_4D_ffc_rec4D_c0-0--1_c1-200-1800_c2-700-1200_standard_29.h5",
+			"dset": "data"
+		}
+    ],
+
+	"validate": [
+		{
+			"path": "/data/staff/tomograms/users/johannes/data/T700-T-22_4D/T700-T-22_4D_ffc_rec4D_c0-0--1_c1-200-1800_c2-900-1500_standard_22.h5",
+			"dset": "data"
+		}
+	]
+}

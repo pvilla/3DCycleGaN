@@ -1,0 +1,35 @@
+{
+	"train": [
+		{
+			"path": "/data/staff/tomograms/users/johannes/data/segmentation/T17-T18/T700-T-17_10N_650nm_ffc_rec_standard_c0-0--1_c1-250-2250_c2-1200-1800_pxs08.h5",
+			"dset": "data"
+		},
+		{
+			"path": "/data/staff/tomograms/users/johannes/data/segmentation/T17-T18/T700-T-17_240N_650nm_ffc_rec_standard_c0-0--1_c1-250-2250_c2-1200-1800_pxs08.h5",
+			"dset": "data"
+		},
+		{
+			"path": "/data/staff/tomograms/users/johannes/data/segmentation/T17-T18/T700-T-17_320N_650nm_ffc_rec_standard_c0-0--1_c1-250-2250_c2-1200-1800_pxs08.h5",
+			"dset": "data"
+		},
+		{
+			"path": "/data/staff/tomograms/users/johannes/data/segmentation/T17-T18/T700-T-17_360N_650nm_ffc_rec_standard_c0-0--1_c1-250-2250_c2-1200-1800_pxs08.h5",
+			"dset": "data"
+		},
+		{
+			"path": "/data/staff/tomograms/users/johannes/data/segmentation/T17-T18/T700-T-17_380N_650nm_ffc_rec_standard_c0-0--1_c1-250-2250_c2-1200-1800_pxs08.h5",
+			"dset": "data"
+		},
+		{
+			"path": "/data/staff/tomograms/users/johannes/data/segmentation/T17-T18/T700-T-17_400N_650nm_ffc_rec_standard_c0-0--1_c1-250-2250_c2-1200-1800_pxs08.h5",
+			"dset": "data"
+		}
+	],
+
+	"validate": [
+		{
+			"path": "/data/staff/tomograms/users/johannes/data/segmentation/T17-T18/T700-T-17_80N_650nm_ffc_rec_standard_c0-0--1_c1-250-2250_c2-1200-1800_pxs08.h5",
+			"dset": "data"
+		}
+	]
+}
