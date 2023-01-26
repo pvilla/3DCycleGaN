@@ -38,7 +38,7 @@ We can follow the red **fast-slow-fast cycle** to understand how cycleGAN is opt
 
 The blue **slow-fast-slow cycle** is computed simulataneously in the same way.
 
-**Like other GAN-based algorithms, CycleGAN is prone to introducing 'Hallucinations'. Hallucinations are invented artifacts that do not exist in the original input data. Hence, CycleGAN enhancements must be visually inspected and checked before they can be used for scientific data analysis.**
+**Like other GAN-based algorithms, CycleGAN is prone to introducing 'Hallucinations'. Hallucinations are invented artifacts that look like real image features but do not exist in the original input data. Hence, CycleGAN enhancements must be visually inspected and checked before they can be used for scientific data analysis.**
 
 ## How to ...
 ### ... find good hyperparameters?
@@ -47,9 +47,16 @@ The hyperparameters that we use to balance the networks are the weights for thei
 
 ### ... change the training datasets?
 If you want to use 3D CycleGAN to enhance your own 3D datasets, you will have to prepare the data in the following way:
-### ... modify the generator networks?
-The generator networks in this version of cycleGAN are U-Nets[^4]. Compared to the original CycleGAN paper which uses U-Nets based on VGG11 or VGG16[^5], our networks are simplified to achieve an optimum between quality of the enhancement, memory usage and optimization time
 
+### ... modify the generator networks?
+The generator networks in this version of cycleGAN are U-Nets[^4]. Compared to the original CycleGAN paper which uses U-Nets based on VGG11 or VGG16[^5], our networks are simplified to achieve an optimum between quality of the enhancement, memory usage and optimization time. A flow chart for our simplified U-Net without super resolution is depicted below.
+
+![Flowchart of a U-Net for 1:1 translations.](https://github.com/pvilla/3DCycleGaN/blob/main/imgs/unetSIM2d.png)
+
+The U-Net has only two pooling layers, which means that during an image translation, each pixel in the original image can only 'see' 8 pixels far. If your data contains different types of features with similar intensity transitions, you might want to consider a deeper U-Net.
+In order to achieve super resolution we need an upscaling network for *generator fast->slow* and a downscaling network for *generator slow->fast* This can be achieved by adding or removing encoder and decoder blocks as shown in the following schematic.
+
+![Flowchart of U-Nets for 2x super resolution.](https://github.com/pvilla/3DCycleGaN/blob/main/imgs/unetSR.png)
 
 [^1]: https://junyanz.github.io/CycleGAN/ , https://arxiv.org/abs/1703.10593
 [^2]: Not yet published. Link to our paper.
