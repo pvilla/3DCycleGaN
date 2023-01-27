@@ -54,9 +54,9 @@ The generator networks in this version of cycleGAN are U-Nets[^4]. Compared to t
 ![Flowchart of a U-Net for 1:1 translations.](https://github.com/pvilla/3DCycleGaN/blob/main/imgs/unetSIM2d.png)
 
 The U-Net has only two pooling layers, which means that during an image translation, each pixel in the original image can only 'see' 8 pixels far. If your data contains different types of features with similar intensity transitions, you might want to consider a deeper U-Net.
-In order to achieve super resolution we need an upscaling network for *generator fast->slow* and a downscaling network for *generator slow->fast* This can be achieved by adding or removing encoder and decoder blocks as shown in the following schematic.
+In order to achieve super resolution we need an upscaling network for *generator fast->slow* and a downscaling network for *generator slow->fast*. This can be achieved by adding or removing encoder and decoder blocks as shown in the following schematic.
 
-![Flowchart of U-Nets for 2x super resolution.](https://github.com/pvilla/3DCycleGaN/blob/main/imgs/unetSR.png)
+![Flowchart of downscaling and upscaling U-Nets for 2x super resolution.](https://github.com/pvilla/3DCycleGaN/blob/main/imgs/unetSR.png)
 
 [^1]: https://junyanz.github.io/CycleGAN/ , https://arxiv.org/abs/1703.10593
 [^2]: Not yet published. Link to our paper.
