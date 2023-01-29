@@ -8,7 +8,58 @@ and it can apply 2x or 4x super-resolution.
 
 ## Quick-start
 This section explains how to train and evaluate the algorithm with the datasets from this paper [^2].
+### Preparation
+1. Download this github repository.
+2. Download the datasets from zenodo_link and copy them into the same folder.
+3. We use [Anaconda](https://www.anaconda.com/) to manage our python packages. Hence [install Anaconda!](https://docs.anaconda.com/anaconda/install/)
+4. Install the python environment `3DcycleGAN_env.yml` containing the relevant packages. (This will throw errors and can easily take 30 minutes.)
+```
+conda env create -f 3DcycleGAN_env.yml
+```
+If you have trouble with the environments, check [the documentation](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html) out.
+### Training
+1. Open the terminal and activate the anaconda environment.
+```
+conda activate 3DcycleGAN
+```
+2. Open `train.py` in a text/code editor and uncomment the relevant lines of code on the bottom of the file, e.g.:
+```
+## uncomment the following lines to train the 2x network for enhancement of the 1ms, 800nm dataset
+    train(run_name = '2x_1ms',
+        data_A = 'dataset/T700_GF_t05_pxs08.json',
+        data_B = 'dataset/T700_GF_t05_pxs08.json',
+        net_A = 'UNetSim3dSRx2',
+        net_B = 'UNetSim3dSRd2',
+        imsize_A = [128,128,128],
+        super_resolution = 2)
+```
+3. Run `train.py`.
+```
+python3 train.py
+```
+4. Check the training progress.
+`.../3DCycleGaN/results/*run_name*/train/` contains images of the cyclic translations:
+![cyclic images](https://github.com/pvilla/3DCycleGaN/blob/main/imgs/trainCycle.png)
+5. Stop the training when you are satisfied with the translation from `real_A` to `fake_B`.
+```
+Ctrl + C
+```
+### Evaluation
+1. Open the terminal and activate the anaconda environment.
+```
+conda activate 3DcycleGAN
+```
 
+2. Open `evaluation.py` in a text/code editor and uncomment the relevant lines of code, e.g.:
+```
+## uncomment to evaluate the 2x network for enhancement of the 1ms, 800nm dataset
+dfile = 
+mfile = 
+evaluate(datafile = dfile, modelfile = mfile, SR = 2, ev_name = '2x_1ms')
+```
+Make sure to change the location of `mfile` to suit your previously trained network.
+
+The resulting enhancement is stored in `.../3DCycleGaN/eval/`.
 
 ## Understanding CycleGAN
 CycleGAN is an unsupervised training strategy for generative neural networks. The algorithm learns how to translate images between two image domains.
