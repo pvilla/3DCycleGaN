@@ -1,7 +1,7 @@
 # 3DCycleGAN
 This modified version of CycleGAN[^1] was developed for enhancing the image quality of time-resolved, fast-acquisition microCT images of fibre-reinforced composites.
 3D CycleGAN translates volumes between a low-quality, fast-acquisition domain (typically domain A) and a high-quality, slow-acquisition domain (typicalliy domain B). This enables an increased temporal resolution at constant image quality.
-The results are discussec in [^2].
+The results are discussed in [^2].
 
 3DCycleGAN can denoise fast-acquisition tomograms to match the noise level of the respective slow-acquisition training set,
 and it can apply 2x or 4x super-resolution.
