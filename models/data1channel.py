@@ -21,8 +21,12 @@ def randomflip(x):
     return x
 
 def read_json(file):
-    with open(file) as jf:
-        return json.load(jf)
+    try:
+        with open(file) as jf:
+            return json.load(jf)
+    except:
+        d = {"validate":[{"path": file, "dset": "data"}]}
+        return d
 
 def centercrop(x,size):             # crop the image to a central square
     off_t = (np.shape(x)[-2]-size)//2
@@ -60,9 +64,6 @@ def h5SizeFetch(fname,dset,size,origin):          # fetches an element from an h
     origin = np.array(origin,dtype=int)
     stop = origin + size
     with h5py.File(fname,'r') as f:
-        # # print(dset)
-        ## print(size)
-        ## print(stop)
         x = np.array(f[dset][...,origin[0]:stop[0],origin[1]:stop[1],origin[2]:stop[2]], dtype=np.float32)
         x[np.isfinite(x) == 0] = 0
     return(x)
@@ -113,12 +114,40 @@ def fix_ROI_list(rois,shapes):
             rois[i][1] = shapes[i]+rois[i][1]
     return rois
 
+def orilist3Dfull(o_size=(200,200,200), patch_size=(64,64,64), stride=(1,1,1),ROI0=None,ROI1=None,ROI2=None):
+    if type(o_size)==int:
+        o_size = (o_size,o_size,o_size)
+    
+    if type(patch_size)==int:
+        patch_size = (patch_size,patch_size,patch_size)
+    
+    if type(stride)==int:
+        stride = (stride,stride,stride)
+    
+    if ROI0 == None:
+        ROI0 = (0,o_size[0])
+    if ROI1 == None:
+        ROI1 = (0,o_size[1])
+    if ROI2 == None:
+        ROI2 = (0,o_size[2])
+    
+    i0s = np.arange(ROI0[0],ROI0[1]-(patch_size[0]-stride[0]),stride[0])
+    i0s[-1] = ROI0[1] - patch_size[0]
+    i1s = np.arange(ROI1[0],ROI1[1]-(patch_size[1]-stride[1]),stride[1])
+    i1s[-1] = ROI1[1] - patch_size[1]
+    i2s = np.arange(ROI2[0],ROI2[1]-(patch_size[2]-stride[2]),stride[2])
+    i2s[-1] = ROI2[1] - patch_size[2]
+    
+    origins = []
+    for k in i2s:
+        for j in i1s:
+            for i in i0s:
+                origins.append([i,j,k])
+    return origins
 
 class Dataset3dsingle(data.Dataset): #h5 dataloader. dfile - json dict with filenames. settype - 'train' or 'validate'. crop - 'random', 'origin',  or tuple interpreted as origin. dlen - sample number. origins - list if crop='origins'. manipulate - data-augmentation.
     def __init__(self, dfile, settype = 'train', dsize = (128,128,128), crop = 'random', dlen = 10000, origins = None, manipulate = None):
-        if settype == 'train':
-            alttype = 'validate'
-        elif settype == 'validate':
+        if settype == 'validate':
             alttype = 'train'
         else:
             settype = 'train'
@@ -149,6 +178,8 @@ class Dataset3dsingle(data.Dataset): #h5 dataloader. dfile - json dict with file
             return self.dlen
         if self.crop == 'origin':
             return len(self.origins)
+        
+        
         
     def __getitem__(self, index):
         if self.crop == 'random':
@@ -208,7 +239,16 @@ class Dataset3dindex(data.Dataset):             #returns Dataset and index. Need
             return self.dlen
         if self.crop == 'origin':
             return len(self.origins)
-        
+    
+    def orilist(self):      #generate list of origins for sliding windows
+        stride = self.dsize - 24
+        oris = []
+        for i in range(len(self.shapelist)):
+            ori = orilist3Dfull(self.shapelist[i],patch_size=self.dsize,stride=stride,ROI0=self.d_ROI0[i],ROI1=self.d_ROI1[i],ROI2=self.d_ROI2[i])
+            oris.append(ori)
+        self.origins = oris[0]
+        return oris[0]
+    
     def __getitem__(self, index):
         
         if self.crop == 'random':
@@ -219,7 +259,7 @@ class Dataset3dindex(data.Dataset):             #returns Dataset and index. Need
             origin = (c0,c1,c2)
                         
         if self.crop == 'origin':
-            fi = 0    #file index
+            fi = 0    #file index; fix this to include all files!!!!
             origin = self.origins[index]
         
         A = h5SizeFetch(self.d_path[fi], self.d_dset[0], self.dsize, origin)
