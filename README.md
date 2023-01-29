@@ -39,7 +39,9 @@ python3 train.py
 ```
 4. Check the training progress.
 `.../3DCycleGaN/results/*run_name*/train/` contains images of the cyclic translations:
+
 ![cyclic images](https://github.com/pvilla/3DCycleGaN/blob/main/imgs/trainCycle.png)
+
 5. Stop the training when you are satisfied with the translation from `real_A` to `fake_B`.
 ```
 Ctrl + C
