@@ -102,11 +102,8 @@ The hyperparameters that we use to balance the networks are the weights for thei
 If you want to use 3D CycleGAN to enhance your own 3D datasets, you will have to prepare the data in the following way:
 
 ### ... modify the generator networks?
-The generator networks in this version of cycleGAN are U-Nets[^4]. Compared to the original CycleGAN paper which uses U-Nets based on VGG11 or VGG16[^5], our networks are simplified to achieve an optimum between quality of the enhancement, memory usage and optimization time. A flow chart for our simplified U-Net without super resolution is depicted below.
-
-![Flowchart of a U-Net for 1:1 translations.](https://github.com/pvilla/3DCycleGaN/blob/main/imgs/unetSIM2d.png)
-
-The U-Net has only two pooling layers, which means that during an image translation, each pixel in the original image can only 'see' 8 pixels far. If your data contains different types of features with similar intensity transitions, you might want to consider a deeper U-Net.
+The generator networks in this version of cycleGAN are U-Nets[^4]. Compared to the original CycleGAN paper which uses U-Nets based on VGG11 or VGG16[^5], our networks are simplified to achieve an optimum between quality of the enhancement, memory usage and optimization time. 
+The U-Nets have two encoder blocks with pooling layers, which means that during an image translation, each pixel in the original image can only 'see' 8 pixels far. If your data contains different types of features with similar intensity transitions, you might want to consider a deeper U-Net.
 In order to achieve super resolution we need an upscaling network for *generator fast->slow* and a downscaling network for *generator slow->fast*. This can be achieved by adding or removing encoder and decoder blocks as shown in the following schematic.
 
 ![Flowchart of downscaling and upscaling U-Nets for 2x super resolution.](https://github.com/pvilla/3DCycleGaN/blob/main/imgs/unetSR.png)
