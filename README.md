@@ -96,17 +96,74 @@ The blue **slow-fast-slow cycle** is computed simulataneously in the same way.
 ## How to ...
 ### ... find good hyperparameters?
 CycleGAN is an algorithm that consists of four interdependent neural networks. These networks need to be balanced so that each network contributes to a successful training outcome.
-The hyperparameters that we use to balance the networks are the weights for their loss functions and their learning rates.
+The hyperparameters that we use to balance the networks are the weights for their loss functions and their learning rates. These are the `lambda_x` and `lr_x` arguments in the `train()` function.
+
+```
+train(run_name = '2x_1ms',
+    data_A = 'dataset/T700_GF_t05_pxs08.json',
+    data_B = 'dataset/T700_GF_t05_pxs08.json',
+    net_A = 'UNetSim3dSRx2',
+    net_B = 'UNetSim3dSRd2',
+    super_resolution = 2
+    lossFuncs_G_A = [nn.BCELoss(),nn.KLDivLoss()], # list of loss functions for the generator loss A (enter one or multiple loss functions)
+    lossNames_G_A = ['G_A_BCE','G_A_KLD'],         # list of unique names for the loss functions
+    lambdas_G_A = [10,5],                          # list of weights for the generator A losses
+    lambdas_G_B = [10],                            # weights for the generator B losses
+    lambdas_D_A = [1],                             # weights for the discriminator A losses
+    lambdas_D_B = [1],                             # weights for the discriminator B losses
+    lambdas_C_A = [100],                           # weights for the cycle consistency A losses
+    lambdas_C_B = [100],                           # weights for the cycle consistency B losses
+    lr_g = 0.0002,                                 # learning rate for generators
+    lr_d = 0.0001,                                 # learning rate for discriminators
+    )
+```
+
+Write a program that loops through different combinations of hyperparameters and that breaks the optimization after ~ 1000 steps. Choose the best hyperparameters and start the real training.
+
+You can also change the or add the loss functions by providing a list of loss functions to the argument `lossFuncs_G_A`.
+
+We also provided a ##experimental## dynamic hyperparameter optimization tool, that can be activated with `HPoptimizer = True`. The function detects possible flaws in the optimization, falls back 200 optimization steps and tries again with modified hyperparameters. This can reduce the need for human interventions.
 
 ### ... change the training datasets?
 If you want to use 3D CycleGAN to enhance your own 3D datasets, you will have to prepare the data in the following way:
+1. crop the dataset to a relevant region of interest.
+2. normalize the dataset by standardization. e.g.
 
+```
+x_norm = ((x-np.mean(x))/np.std(x))
+```
+3. save the dataset in an .h5 file. The dataset name should be `data` with dtype `float32` or `float16`.
+
+4. in the `dataset` folder, create a .json file where you specify the dataset locations for train-set and validation-set.
+
+```
+{
+	"train": [
+		{
+			"path": "/data/T700-T-21_GF_1p6um_1ms_2.h5",
+			"dset": "data"
+		},
+		{
+			"path": "/data/T700-T-21_GF_1p6um_1ms_3.h5",
+			"dset": "data"
+		}
+	],
+
+	"validate": [
+		{
+			"path": "/data/T700-T-21_GF_1p6um_1ms_1.h5",
+			"dset": "data"
+		}
+	]
+}
+```
 ### ... modify the generator networks?
 The generator networks in this version of cycleGAN are U-Nets[^4]. Compared to the original CycleGAN paper which uses U-Nets based on VGG11 or VGG16[^5], our networks are simplified to achieve an optimum between quality of the enhancement, memory usage and optimization time. 
 The U-Nets have two encoder blocks with pooling layers, which means that during an image translation, each pixel in the original image can only 'see' 8 pixels far. If your data contains different types of features with similar intensity transitions, you might want to consider a deeper U-Net.
 In order to achieve super resolution we need an upscaling network for *generator fast->slow* and a downscaling network for *generator slow->fast*. This can be achieved by adding or removing encoder and decoder blocks as shown in the following schematic.
 
 ![Flowchart of downscaling and upscaling U-Nets for 2x super resolution.](https://github.com/pvilla/3DCycleGaN/blob/main/imgs/unetSR.png)
+
 
 [^1]: https://junyanz.github.io/CycleGAN/ , https://arxiv.org/abs/1703.10593
 [^2]: Not yet published. Link to our paper.
