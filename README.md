@@ -10,7 +10,7 @@ and it can apply 2x or 4x super-resolution.
 This section explains how to train and evaluate the algorithm with the datasets from this paper [^2]. The code was tested on computation nodes with 4x 32GB nVidia V100.
 ### Preparation
 1. Download this github repository.
-2. Download the datasets from zenodo_link and copy them into the same folder.
+2. Download the datasets from zenodo_link and move the contents into the `3DCycleGAN/data` folder.
 3. We use [Anaconda](https://www.anaconda.com/) to manage our python packages. Hence [install Anaconda!](https://docs.anaconda.com/anaconda/install/)
 4. Install the python environment `3DcycleGAN_env.yml` containing the relevant packages. (This will throw errors and can easily take 30 minutes.)
 ```
