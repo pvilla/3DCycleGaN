@@ -59,7 +59,8 @@ dfile =
 mfile = 
 evaluate(datafile = dfile, modelfile = mfile, SR = 2, ev_name = '2x_1ms')
 ```
-Make sure to change the location of `mfile` to suit your previously trained network.
+
+Make sure to change the location of `mfile` to suit your previously trained network. The trained networks are stored in `.../3DCycleGaN/results/*run_name*/save/`
 
 The resulting enhancement is stored in `.../3DCycleGaN/eval/`.
 
