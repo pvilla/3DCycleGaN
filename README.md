@@ -122,19 +122,19 @@ Write a program that loops through different combinations of hyperparameters and
 
 You can also change the or add the loss functions by providing a list of loss functions to the argument `lossFuncs_G_A`.
 
-We also provided a ##experimental## dynamic hyperparameter optimization tool, that can be activated with `HPoptimizer = True`. The function detects possible flaws in the optimization, falls back 200 optimization steps and tries again with modified hyperparameters. This can reduce the need for human interventions.
+We also provided a **experimental** dynamic hyperparameter optimization tool, that can be activated with `HPoptimizer = True`. The function detects possible flaws in the optimization, falls back 200 optimization steps and tries again with modified hyperparameters. This **may** reduce the need for human interventions.
 
 ### ... change the training datasets?
 If you want to use 3D CycleGAN to enhance your own 3D datasets, you will have to prepare the data in the following way:
 1. crop the dataset to a relevant region of interest.
-2. normalize the dataset by standardization. e.g.
+2. normalize the dataset by standardization, e.g.
 
 ```
 x_norm = ((x-np.mean(x))/np.std(x))
 ```
-3. save the dataset in an .h5 file. The dataset name should be `data` with dtype `float32` or `float16`.
+3. save the dataset in an [.h5 file](https://docs.h5py.org/). The dataset name should be `data` with dtype `float32` or `float16`.
 
-4. in the `dataset` folder, create a .json file where you specify the dataset locations for train-set and validation-set.
+4. in the `dataset` folder, create a .json file where you specify the dataset locations for train-set and validation-set, e.g.
 
 ```
 {
@@ -157,6 +157,7 @@ x_norm = ((x-np.mean(x))/np.std(x))
 	]
 }
 ```
+
 ### ... modify the generator networks?
 The generator networks in this version of cycleGAN are U-Nets[^4]. Compared to the original CycleGAN paper which uses U-Nets based on VGG11 or VGG16[^5], our networks are simplified to achieve an optimum between quality of the enhancement, memory usage and optimization time. 
 The U-Nets have two encoder blocks with pooling layers, which means that during an image translation, each pixel in the original image can only 'see' 8 pixels far. If your data contains different types of features with similar intensity transitions, you might want to consider a deeper U-Net.
