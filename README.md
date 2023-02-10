@@ -7,7 +7,7 @@ The results are discussed in [^2].
 and it can apply 2x or 4x super-resolution.
 
 ## Quick-start
-This section explains how to train and evaluate the algorithm with the datasets from this paper [^2].
+This section explains how to train and evaluate the algorithm with the datasets from this paper [^2]. The code was tested on computation nodes with 4x 32GB nVidia V100.
 ### Preparation
 1. Download this github repository.
 2. Download the datasets from zenodo_link and copy them into the same folder.
