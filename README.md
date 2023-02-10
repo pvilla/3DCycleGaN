@@ -63,6 +63,8 @@ Make sure to change the location of `mfile` to suit your previously trained netw
 
 The resulting enhancement is stored in `.../3DCycleGaN/eval/`.
 
+We use [silx view](http://www.silx.org/doc/silx/latest/) to view our .h5 files.
+
 ## Understanding CycleGAN
 CycleGAN is an unsupervised training strategy for generative neural networks. The algorithm learns how to translate images between two image domains.
 The image below shows a flowchart of CycleGAN. 
