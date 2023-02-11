@@ -143,18 +143,18 @@ x_norm = ((x-np.mean(x))/np.std(x))
 {
 	"train": [
 		{
-			"path": "/data/T700-T-21_GF_1p6um_1ms_2.h5",
+			"path": "data/T700-T-21_GF_1p6um_1ms_2.h5",
 			"dset": "data"
 		},
 		{
-			"path": "/data/T700-T-21_GF_1p6um_1ms_3.h5",
+			"path": "data/T700-T-21_GF_1p6um_1ms_3.h5",
 			"dset": "data"
 		}
 	],
 
 	"validate": [
 		{
-			"path": "/data/T700-T-21_GF_1p6um_1ms_1.h5",
+			"path": "data/T700-T-21_GF_1p6um_1ms_1.h5",
 			"dset": "data"
 		}
 	]
