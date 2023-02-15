@@ -21,10 +21,13 @@ def randomflip(x):
     return x
 
 def read_json(file):
-    try:
+    # print(file)
+    # print(file[:-4])
+    if file[-4:] == 'json':
         with open(file) as jf:
             return json.load(jf)
-    except:
+    else:
+        # print('no')
         d = {"validate":[{"path": file, "dset": "data"}]}
         return d
 
@@ -54,6 +57,7 @@ def randomcrop3d(x,size):             # crop a random part of the image to a squ
 def h5listshape(flist,dset):          #returns the amount of items from specific datasets in multiple h5 files.
     ls = []
     for i in range(len(flist)):
+        # print(flist[i])
         with h5py.File(flist[i],'r') as f:
             ls.append(np.shape(f[dset[i]]))
     ls = np.array(ls)
@@ -61,7 +65,9 @@ def h5listshape(flist,dset):          #returns the amount of items from specific
 
 def h5SizeFetch(fname,dset,size,origin):          # fetches an element from an h5 file
     size = np.array(size,dtype=int)
+    # print(size)
     origin = np.array(origin,dtype=int)
+    #print(fname, size)
     stop = origin + size
     with h5py.File(fname,'r') as f:
         x = np.array(f[dset][...,origin[0]:stop[0],origin[1]:stop[1],origin[2]:stop[2]], dtype=np.float32)
@@ -114,7 +120,7 @@ def fix_ROI_list(rois,shapes):
             rois[i][1] = shapes[i]+rois[i][1]
     return rois
 
-def orilist3Dfull(o_size=(200,200,200), patch_size=(64,64,64), stride=(1,1,1),ROI0=None,ROI1=None,ROI2=None):
+def orilist3Dfull(o_size=(200,200,200), patch_size=(64,64,64), stride=(1,1,1),**kwargs):#,ROI0=None,ROI1=None,ROI2=None):
     if type(o_size)==int:
         o_size = (o_size,o_size,o_size)
     
@@ -124,12 +130,18 @@ def orilist3Dfull(o_size=(200,200,200), patch_size=(64,64,64), stride=(1,1,1),RO
     if type(stride)==int:
         stride = (stride,stride,stride)
     
-    if ROI0 == None:
-        ROI0 = (0,o_size[0])
-    if ROI1 == None:
-        ROI1 = (0,o_size[1])
-    if ROI2 == None:
-        ROI2 = (0,o_size[2])
+    # if ROI0 == None:
+    #     ROI0 = (0,o_size[0])
+    # if ROI1 == None:
+    #     ROI1 = (0,o_size[1])
+    # if ROI2 == None:
+    #     ROI2 = (0,o_size[2])
+
+    ROI0 = (0,o_size[0])
+    
+    ROI1 = (0,o_size[1])
+    
+    ROI2 = (0,o_size[2])
     
     i0s = np.arange(ROI0[0],ROI0[1]-(patch_size[0]-stride[0]),stride[0])
     i0s[-1] = ROI0[1] - patch_size[0]
@@ -167,6 +179,7 @@ class Dataset3dsingle(data.Dataset): #h5 dataloader. dfile - json dict with file
         self.dlen = dlen
         self.manipulate = manipulate
         self.dsize = np.array(dsize)
+        # print(dsize)
         self.shapelist = h5listshape(self.d_path,self.d_dset)
         
         self.d_ROI0 = fix_ROI_list(self.d_ROI0, self.shapelist[:,-3])

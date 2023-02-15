@@ -110,7 +110,7 @@ class TrainModel(ABC):
         self.isTrain = True
 
         self.save_run = F"{self.run_path}/{self.run_name}"
-        self.save_log = F"{self.save_run}/log.txt"
+        self.save_log = F"{self.save_run}/log.json"
         self.save_stats = F"{self.save_run}/stats.txt"
         
         self.loss_names = ['D_A', 'G_A', 'cycle_A', 'D_B', 'G_B', 'cycle_B']
@@ -150,6 +150,7 @@ class TrainModel(ABC):
         for t in self.ttNames:
             self.truthTables[t] = {'TP': [], 'TN': [], 'FP': [], 'FN': []}
         
+        self.imsize_A = np.array(self.imsize_A)
         self.imsize_B = self.imsize_A * self.super_resolution
         self.img_names = ['real_A', 'fake_B', 'rec_A', 'real_B', 'fake_A', 'rec_B']
         print(f'{self.super_resolution}x super resolution')
@@ -239,13 +240,13 @@ class TrainModel(ABC):
                     getattr(self, 'loss_' + name))
         return errors_list
 
-    def print_current_losses(self, epoch, iters, losses):
-        message = 'Epoch [{}/{}], Step [{}/{}]'.format(epoch+1, self.num_epochs, iters+1, self.stepN_epoch)
+    def print_current_losses(self, losses):
+        message = 'Step [{}/{}]'.format(self.step,self.num_iters)
         for name, loss in losses.items():
             message += ', {:s}: {:.3f}'.format(name, loss)
         print(message)
-        with open(self.save_log, "a") as f:
-            print(message,file=f)
+        # with open(self.save_log, "a") as f:
+        #     print(message,file=f)
         
     def save_lossdict(self,name='losses'):
         ldict = {'losses': self.losses,
@@ -354,6 +355,11 @@ class TrainModel(ABC):
         self.train_loader, self.test_loader = self.load_data()
         self.stepN_epoch = len(self.train_loader)
         self.create_dir_if_not_exist(self.save_run)
+        kwargs = self.kwargs
+        for key in kwargs:
+            kwargs[key] = str(kwargs[key])
+        with open(self.save_log, 'w') as fp:
+            json.dump(kwargs, fp, sort_keys=True, indent=4)
 
     def optimize_parameters(self):
         self.init_model()
@@ -592,8 +598,8 @@ class TrainModel(ABC):
         x = x.flatten()
         # print('%s:  mean = %3.3f, min = %3.3f, max = %3.3f, median = %3.3f, std=%3.3f' % (note,np.mean(x), np.min(x),np.max(x),np.median(x), np.std(x)),file=f)
 
-    def visual_iter(self,epoch,iter):
-        self.write_to_stat(epoch, iter)
+    def visual_iter(self):
+        #self.write_to_stat(epoch)
         save_name = f'cycle_plot_step{self.step}'
         self.plot_cycle_cyclegan(0,save_name,0,False,plot_phase=False)
         self.plot_cycle_h5(save_name)
@@ -859,70 +865,70 @@ class TrainModel(ABC):
             lambda_out *= 1 + factor
         return max(min(lambda_out,omax),omin)
     
-    def rand_lambdas(self):
+    def rand_lambdas(self, maxfac = 0.5):
         #cycle A
         for i in range(len(self.lambdas_C_A)):
-            self.lambdas_C_A[i] = self.adjust_lambda(self.lambdas_C_A[i], factor = np.random.rand()-.5)
+            self.lambdas_C_A[i] = self.adjust_lambda(self.lambdas_C_A[i], factor = np.random.rand()-maxfac)
             
         #cycle B
         for i in range(len(self.lambdas_C_B)):
-            self.lambdas_C_B[i] = self.adjust_lambda(self.lambdas_C_B[i], factor = np.random.rand()-.5)
+            self.lambdas_C_B[i] = self.adjust_lambda(self.lambdas_C_B[i], factor = np.random.rand()-maxfac)
            
 ################## Add multi loss support for gan loss!!!!!!!!!!!!!!!!
         #gen A
         for i in range(len(self.lambdas_G_A)):
-            self.lambdas_G_A[i] = self.adjust_lambda(self.lambdas_G_A[i], factor = np.random.rand()-.5)
+            self.lambdas_G_A[i] = self.adjust_lambda(self.lambdas_G_A[i], factor = np.random.rand()-maxfac)
             
         #gen B
         for i in range(len(self.lambdas_G_B)):
-            self.lambdas_G_B[i] = self.adjust_lambda(self.lambdas_G_B[i], factor = np.random.rand()-.5)
+            self.lambdas_G_B[i] = self.adjust_lambda(self.lambdas_G_B[i], factor = np.random.rand()-maxfac)
             
         #dis A
         for i in range(len(self.lambdas_D_A)):
-            self.lambdas_D_A[i] = self.adjust_lambda(self.lambdas_D_A[i], factor = np.random.rand()-.5)
+            self.lambdas_D_A[i] = self.adjust_lambda(self.lambdas_D_A[i], factor = np.random.rand()-maxfac)
             
         #dis B
         for i in range(len(self.lambdas_D_B)):
-            self.lambdas_D_B[i] = self.adjust_lambda(self.lambdas_D_B[i], factor = np.random.rand()-.5)
+            self.lambdas_D_B[i] = self.adjust_lambda(self.lambdas_D_B[i], factor = np.random.rand()-maxfac)
             
         self.normalize_lambdas(200)
                 
-    def fix_lambdas(self):
+    def fix_lambdas(self, factor = .3):
         ctarget = self.cycle_target([*self.lossNames_C_A,*self.lossNames_C_B])
         #cycle A
         for i in range(len(self.lambdas_C_A)):
             grad = self.loss_grad(self.lossNames_C_A[i])
             sign = grad - ctarget
             print(f'{self.lossNames_C_A[i]} - sign {sign}')
-            self.lambdas_C_A[i] = self.adjust_lambda(self.lambdas_C_A[i], sign = sign)
+            self.lambdas_C_A[i] = self.adjust_lambda(self.lambdas_C_A[i], sign = sign, factor = factor)
             
         #cycle B
         for i in range(len(self.lambdas_C_B)):
             grad = self.loss_grad(self.lossNames_C_B[i])
             sign = grad - ctarget
             print(f'{self.lossNames_C_B[i]} - sign {sign}')
-            self.lambdas_C_B[i] = self.adjust_lambda(self.lambdas_C_B[i], sign = sign)
+            self.lambdas_C_B[i] = self.adjust_lambda(self.lambdas_C_B[i], sign = sign, factor = factor)
            
 ################## Add multi loss support for gan loss!!!!!!!!!!!!!!!!
         #gen A
         for i in range(len(self.lambdas_G_A)):
             ttmean = self.tt_mean('tt_D_A','FP')
-            self.lambdas_G_A[i] = self.adjust_lambda(self.lambdas_G_A[i], sign = 0.4 - ttmean)
+            self.lambdas_G_A[i] = self.adjust_lambda(self.lambdas_G_A[i], sign = 0.4 - ttmean, factor = factor)
             
         #gen B
         for i in range(len(self.lambdas_G_B)):
             ttmean = self.tt_mean('tt_D_B','FP')
-            self.lambdas_G_B[i] = self.adjust_lambda(self.lambdas_G_B[i], sign = 0.4 - ttmean)
+            self.lambdas_G_B[i] = self.adjust_lambda(self.lambdas_G_B[i], sign = 0.4 - ttmean, factor = factor)
             
         #dis A
         for i in range(len(self.lambdas_D_A)):
             ttmean = self.tt_mean('tt_D_A')
-            self.lambdas_D_A[i] = self.adjust_lambda(self.lambdas_D_A[i], sign = 0.6 - ttmean)
+            self.lambdas_D_A[i] = self.adjust_lambda(self.lambdas_D_A[i], sign = 0.6 - ttmean, factor = factor)
             
         #dis B
         for i in range(len(self.lambdas_D_B)):
             ttmean = self.tt_mean('tt_D_B')
-            self.lambdas_D_B[i] = self.adjust_lambda(self.lambdas_D_B[i], sign = 0.6 - ttmean)
+            self.lambdas_D_B[i] = self.adjust_lambda(self.lambdas_D_B[i], sign = 0.6 - ttmean, factor = factor)
             
         self.normalize_lambdas(200)
         
@@ -1094,7 +1100,8 @@ class TrainModel(ABC):
             
         else:
             self.fallbackcount = 0
-            self.fix_lambdas()
+            self.rand_lambdas(0.3)
+            self.fix_lambdas(0.2)
             
             skewfac = 0.5*(self.tt_mean('tt_D_A') + self.tt_mean('tt_D_B'))
             self.fix_lrs(skewfac,dfac = self.lr_d_0, gfac = self.lr_g_0)

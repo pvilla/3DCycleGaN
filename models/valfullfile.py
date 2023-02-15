@@ -12,7 +12,7 @@ import time
 
         
 # initialize network with weights from file_path
-def load_model(file_path,model = UNetSim3d(num_out=1)):
+def load_model(file_path,model = UNetSim3d(num_out=1),device = torch.device("cuda" if torch.cuda.is_available() else "cpu")):
     try:
         model = nn.DataParallel(model).to(device)
         state_dict = torch.load(file_path)['model_state_dict']['netG_A']
@@ -39,6 +39,9 @@ def h5_add_dset(data,name='fake_B',set_name='[0,0,0]'):
         f.create_dataset(set_name, shape = data.shape,dtype = 'float16',data = data)
 
 def add3(array_A,array_B,pos_B):
+    # print('A', np.shape(array_A))
+    # print('B', np.shape(array_B))
+    # print(pos_B)
     shape_B = np.array(np.shape(array_B))
     shape_B_pos = shape_B + np.array(pos_B)
     B0_1, B1_1, B2_1 = shape_B_pos
@@ -51,7 +54,7 @@ def padmask3(a,padding=10):
     mask[p:-p,p:-p,p:-p] = 1
     return mask
 
-def stitchh5(fname,shape,padding=10,wname = 'ev'):
+def stitchh5(fname,shape,padding=10,name = 'ev'):
     wname = f'eval/{name}.h5'
     with h5py.File(fname,'r') as rf, h5py.File(wname,'w') as wf:
         A = wf.create_dataset('data', dtype = np.float16,shape=shape)
@@ -79,17 +82,24 @@ def stitchh5(fname,shape,padding=10,wname = 'ev'):
         del wf['mask']
 
 
-def evalulate(datafile, modelfile, SR = 1, ev_name = 'ev'):
+def evaluate(datafile, modelfile, SR = 1, ev_name = 'ev', dsize_A = (64,128,128)):
+    if SR == 1:
+        mtype = UNetSim3d(num_out=1)
+    elif SR == 2:
+        mtype = UNetSim3dSRx2(num_out=1)
+    elif SR == 4:
+        mtype = UNetSim3dSRx4(num_out=1)
+        
     st = time.time()
     print('start evaluating patches')
     print(time.asctime())
     
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    dataset = Dataset3dindex(dfile = datafile, settype = 'validate', dsize = (128,128,128), crop = 'origin')
+    dataset = Dataset3dindex(dfile = datafile, settype = 'validate', dsize = dsize_A, crop = 'origin')
     origins = dataset.orilist()
     loader = torch.utils.data.DataLoader(dataset=dataset, batch_size=16, shuffle=False)
     
-    model = load_model(modelfile)
+    model = load_model(modelfile, model = mtype, device = device)
 
     with torch.no_grad():
         
@@ -109,7 +119,8 @@ def evalulate(datafile, modelfile, SR = 1, ev_name = 'ev'):
     
     print('start stitching patches')
     padding = 10*SR
-    stitchh5(f'eval/temp_{ev_name}.h5',shape = dataset.shapelist[0],padding = padding,wname = ev_name)
+    newshape = SR * np.array(dataset.shapelist[0])
+    stitchh5(f'eval/temp_{ev_name}.h5',shape = newshape,padding = padding,name = ev_name)
 
 #if __name__ == '__main__':
     

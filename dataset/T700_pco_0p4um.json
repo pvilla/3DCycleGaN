@@ -1,0 +1,24 @@
+{
+	"train": [
+		{
+			"path": "data/T700-T-02_pco_0p4um.h5",
+			"dset": "data"
+		},
+		{
+			"path": "data/T700-T-08_pco_0p4um.h5",
+			"dset": "data"
+		},
+		{
+			"path": "data/T700-T-26_pco_0p4um.h5",
+			"dset": "data"
+		}
+	],
+
+	"validate": [
+		{
+			"path": "data/T700-T-02_pco_0p4um.h5",
+			"dset": "data"
+		}
+	]
+}
+
