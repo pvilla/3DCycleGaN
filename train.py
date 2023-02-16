@@ -131,7 +131,7 @@ if __name__ == '__main__':
         kickstart = True)
     
 # # uncomment to train the 4x network for enhancement of the 3ms, 1600nm dataset
-#     train(run_name = '4x_3ms_7_pret',
+#     train(run_name = '4x_3ms',
 #         data_A = 'dataset/T700_GF_1p6um_3ms.json',
 #         data_B = 'dataset/T700_pco_0p4um.json',
 #         net_A = 'UNetSim3dSRx4',
@@ -142,11 +142,11 @@ if __name__ == '__main__':
 #         super_resolution = 4,
 #         HPoptimizer = True,
 #         kickstart = True,
-#         pretrained = 'data/pretrained_networks/4x_pretrain.ptt')
+#         pretrained = 'data/pretrained_networks/4x_pretrain.pt')
     
 # # uncomment to train the 4x network for enhancement of the 0.5ms, 1600nm dataset
-#     train(run_name = '4x_05ms_6_pret',
-#         data_A = 'dataset/T700_GF_1p6um_1ms.json',
+#     train(run_name = '4x_0p5ms',
+#         data_A = 'dataset/T700_GF_1p6um_0p5ms.json',
 #         data_B = 'dataset/T700_pco_0p4um.json',
 #         net_A = 'UNetSim3dSRx4',
 #         net_B = 'UNetSim3dSRd4',
@@ -156,5 +156,5 @@ if __name__ == '__main__':
 #         super_resolution = 4,
 #         HPoptimizer = True,
 #         kickstart = False,
-#         pretrained = 'data/pretrained_networks/4x_pretrain.ptt')
+#         pretrained = 'data/pretrained_networks/4x_pretrain.pt')
     
