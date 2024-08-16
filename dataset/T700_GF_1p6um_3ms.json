@@ -1,0 +1,27 @@
+{
+	"train": [
+		{
+			"path": "data/T700-T-21_GF_1p6um_3ms_2.h5",
+			"dset": "data"
+		},
+		{
+			"path": "data/T700-T-21_GF_1p6um_3ms_3.h5",
+			"dset": "data"
+		},
+		{
+			"path": "data/T700-T-21_GF_1p6um_3ms_4.h5",
+			"dset": "data"
+		},
+		{
+			"path": "data/T700-T-21_GF_1p6um_3ms_5.h5",
+			"dset": "data"
+		}
+	],
+
+	"validate": [
+		{
+			"path": "data/T700-T-21_GF_1p6um_3ms_1.h5",
+			"dset": "data"
+		}
+	]
+}

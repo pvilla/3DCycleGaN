@@ -1,0 +1,15 @@
+{
+	"train": [
+		{
+			"path": "data/T700-T-21_GF_1p6um_0p5ms_2.h5",
+			"dset": "data"
+		}
+	],
+
+	"validate": [
+		{
+			"path": "data/T700-T-21_GF_1p6um_0p5ms_1.h5",
+			"dset": "data"
+		}
+	]
+}
