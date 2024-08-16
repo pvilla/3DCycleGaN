@@ -6,10 +6,6 @@ import numpy as np
 import h5py
 from models.data1channel import *
 import time
-# from dataset.CFibres1channel import *
-
-
-
         
 # initialize network with weights from file_path
 def load_model(file_path,model = UNetSim3d(num_out=1),device = torch.device("cuda" if torch.cuda.is_available() else "cpu")):
