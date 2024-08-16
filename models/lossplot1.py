@@ -1,18 +1,9 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Sun Oct  9 18:16:17 2022
-
-@author: jestubbe
-"""
 import json
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import os
 
-lossfile = '/data/staff/tomograms/users/johannes/2022_09_26-cycleSegLL/results/A50_B50_10_GA30_GB30_lrG1e-04_lrD1e-04_seg2_semi_bin-dice/losses.json'
-lossfile = '/data/staff/tomograms/users/johannes/2022_09_26-cycleSegLL/results/A50_B50_10_0_GA30_GB30_lrG1e-04_lrD1e-03_seg2_semi_bin-dice/losses.json'
 def fitplot(x,y):
     z = np.polyfit(x, y, 1)
     p = np.poly1d(z)
@@ -178,7 +169,7 @@ def plotmetrics(lossfile):
         
 if __name__ == '__main__':
     lossfiles = [
-        '/data/staff/tomograms/users/johannes/2022_11_08_cycleGAN_HPFinder/results/A10_B10_GA10_GB10_lrG1e-05_lrD1e-05_hpfinder/losses_fail99.json'
+        'PATH TO FILe'
         ]
     
     for lf in lossfiles:
