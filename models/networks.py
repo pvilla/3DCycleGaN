@@ -1,12 +1,7 @@
 import torch
 from torch import nn
 from torchvision import models
-import sys
-sys.path.insert(1, '../Multi-Scale-Attention-master/src')
-print(sys.path)
-from models.my_stacked_danet import DAF_stack
-# sys.path.insert(1, '../Swin-Unet-main/')
-# from networks.swin_transformer_unet_skip_expand_decoder_sys import SwinTransformerSys
+
 def conv3x3d(in_, out):
     return nn.Conv3d(in_, out, 3, padding=1)
 
