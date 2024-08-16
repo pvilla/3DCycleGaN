@@ -3,14 +3,13 @@ This modified version of CycleGAN[^1] was developed for enhancing the image qual
 3D CycleGAN translates volumes between a low-quality, fast-acquisition domain (typically domain A) and a high-quality, slow-acquisition domain (typicalliy domain B). This enables an increased temporal resolution at constant image quality.
 The results are discussed in [^2].
 
-3DCycleGAN can denoise fast-acquisition tomograms to match the noise level of the respective slow-acquisition training set,
-and it can apply 2x or 4x super-resolution.
+3DCycleGAN can denoise fast-acquisition tomograms to match the noise level of the respective slow-acquisition training set, and it can apply 2x or 4x super-resolution.
 
 ## Quick-start
 This section explains how to train and evaluate the algorithm with the datasets from this paper [^2]. The code was tested on computation nodes with 4x 32GB nVidia V100.
 ### Preparation
 1. Download this github repository.
-2. Download the datasets from zenodo_link and move the contents into the `3DCycleGAN/data` folder.
+2. Download the datasets from [zenodo](https://doi.org/10.5281/zenodo.7632124) and move the contents into the `3DCycleGAN/data` folder.
 3. We use [Anaconda](https://www.anaconda.com/) to manage our python packages. Hence [install Anaconda!](https://docs.anaconda.com/anaconda/install/)
 4. Install the python environment `3DcycleGAN_env.yml` containing the relevant packages. (This will throw errors and can easily take 30 minutes.)
 ```
@@ -170,7 +169,7 @@ In order to achieve super resolution we need an upscaling network for *generator
 
 
 [^1]: https://junyanz.github.io/CycleGAN/ , https://arxiv.org/abs/1703.10593
-[^2]: Not yet published. Link to our paper.
-[^3]: cite goodfellow
-[^4]: cite unet paper
-[^5]: cite VGG paper
+[^2]: https://doi-org.remotexs.ntu.edu.sg/10.1016/j.compscitech.2023.110278
+[^3]: https://doi.org/10.1145/3422622
+[^4]: https://doi.org/10.1007/978-3-319-24574-4_28
+[^5]: https://www.wanshiok.com/d/file/p/2020/10-15/2156e3d60ae5f9b25d278a8624c90964.pdf
